@@ -54,6 +54,10 @@ export class CalendarService {
      * @param  interval  may +ve to add months, -ve to remove months
      * @returns {moment.Moment}
      * @private
+     *
+     *
+     *
+     *
      */
     _calcLowerMostDate(curDate: any, interval: number) {
         const f = this._fmDt;
@@ -67,7 +71,6 @@ export class CalendarService {
             // console.log('lesss than 0', interval, 'new date', f(newDate));
         }
         const firstDayofMonth = moment(newDate).startOf('month');
-
         const weekdayIdxF = moment(firstDayofMonth).weekday();
         // console.log('firstday of mont', f(firstDayofMonth), weekdayIdxF);
         return moment(firstDayofMonth).subtract(weekdayIdxF - 1, 'days');
