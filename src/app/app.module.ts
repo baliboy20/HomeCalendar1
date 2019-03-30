@@ -13,7 +13,7 @@ import { MousedownDirective } from './overview/appt-quick-view/mousedown.directi
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { SimpleDataEntryComponent } from './simple-data-entry/simple-data-entry.component';
 import {HttpService} from '../services/http.service';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CdkTableModule} from '@angular/cdk/table';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
@@ -22,6 +22,7 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
     declarations: [
         AppComponent,
         SimpleDataEntryComponent,
+
 
     ],
     imports: [
@@ -43,7 +44,7 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
         NgxMaterialTimepickerModule,
 
     ],
-    providers: [CalendarService, HttpService],
+    providers: [CalendarService, HttpService, HttpClient, AppointmentService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

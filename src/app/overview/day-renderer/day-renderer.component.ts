@@ -18,13 +18,9 @@ export class DayRendererComponent implements OnInit {
     value: string;
     date: Moment;
     backCol: string;
-    colors = [
-        'lightgoldenrodyellow',
-        'lightgreen',
-        'lightpink',
-        'silver'
-    ];
+    colors = ['lightgoldenrodyellow', 'lightgreen', 'lightpink', 'silver'];
     private _appointments: IAppointment[] = [];
+
 
     mouseLeaveDayListItem(e: Event) {
         e.preventDefault();
@@ -32,6 +28,7 @@ export class DayRendererComponent implements OnInit {
         const el: HTMLHtmlElement = e.target as HTMLHtmlElement;
         el.style.border = '1px solid ' + this.backCol;
     }
+
 
     mouseEnterDayListItem(e: Event) {
         e.preventDefault();
@@ -44,13 +41,16 @@ export class DayRendererComponent implements OnInit {
         }
     }
 
-    mousedownDayListItem(event, a) {
 
+    mousedownDayListItem(event, a) {
     }
+
 
     @Input() set appointments(arg: IAppointment[]) {
+        console.log('inseide appts', arg);
         this._appointments = arg || [];
     }
+
 
     @Input() set item(arg: any) {
         // console.log('setting appointment inside the Renderer', arg, this._appointments);
@@ -59,7 +59,10 @@ export class DayRendererComponent implements OnInit {
         this.date = arg;
     }
 
-    ngOnInit() {}
+
+    ngOnInit() {
+    }
+
 
     calcColor(arg, dayno, dt: Moment) {
         let col = 1;
@@ -83,3 +86,27 @@ export class DayRendererComponent implements OnInit {
         this.backCol = this.colors[col];
     }
 }
+
+// function Student(config) {
+//     return function (target) {
+//         Object.defineProperty(target.prototype, 'course', { value: () => config.course });
+//     };
+// }
+//
+//
+//
+// @Student({
+//     course: 'angular3'
+// })
+// class Person {
+//     constructor(private firstName, private lastName) {
+//     }
+//
+//     public name() {
+//         return `${this.firstName} ${this.lastName}`;
+//     }
+//
+//     protected whoAreYou() {
+//         return `Hi i'm ${this.name()}`;
+//     }
+// }

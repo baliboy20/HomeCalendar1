@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {IAppointment} from './appointment.service';
 
@@ -10,7 +10,7 @@ export class HttpService {
     const;
     url = '/appointment';
 
-    constructor(public http: HttpClient) {
+    constructor( public http: HttpClient) {
     }
 
     findAll() {

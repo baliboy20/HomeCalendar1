@@ -3,15 +3,18 @@ import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {CalendarService} from '../../services/calendar.service';
 import * as moment from 'moment';
 import {CdkVirtualForOf} from '@angular/cdk/scrolling';
-import {BehaviorSubject, concat, from, Observable} from 'rxjs';
+import {ReplaySubject, concat, from, Observable} from 'rxjs';
 import {tap} from 'rxjs/internal/operators';
 import {AppointmentService, IAppointment} from '../../services/appointment.service';
+import {HttpService} from '../../services/http.service';
+import {isNull} from 'util';
 
 @Component({
     selector: 'app-overview',
     templateUrl: './overview.component.html',
     styleUrls: ['./overview.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    providers:[ AppointmentService]
 })
 export class OverviewComponent implements OnInit {
     @ViewChild(CdkVirtualScrollViewport)
@@ -23,31 +26,46 @@ export class OverviewComponent implements OnInit {
     items = [];
     currentIdx: any = null;
     currentDate;
-    data: BehaviorSubject<any>;
+    calendar: ReplaySubject<any> = new ReplaySubject<any>();
     recordLock = false;
-    appointments: { string: Array<IAppointment> };
+    appointments: any ;
 
-    constructor(public service: CalendarService, public appointmentsService: AppointmentService) {
+    constructor(public service: CalendarService,
+                public appointmentsService: AppointmentService,
+                public rep: HttpService,
+    ) {
 
     }
 
     ngOnInit() {
+        // console.log('is ints', isNull(this.appointmentsService))
+        // this.appointmentsService.getAppointments().subscribe(console.log)
         this.appointmentsService.getAppointments()
-            // .subscribe(a => {
-            //     console.log('appps', a);
-            //     this.appointments = a;
-            //     // this.initCalendar();
-            // });
-        this.initCalendar();
+            .subscribe(a => {
+                console.log('appps', a);
+                this.appointments = a ;
+                this.initCalendar();
+            });
+       // this.rep.findAll().subscribe(console.log);
+       //  this.initCalendar();
     }
 
+
+    myass =  () => {
+        console.log('and god said it is it good');
+    }
+
+
+   @this.myass()
     initCalendar() {
 
-        this.service.initCalendar(moment('23/May/2019'), 1)
+console.log('in here');
+        this.service.initCalendar(moment('23/Mar/2019'), 1)
             .subscribe(a => {
-                this.data = new BehaviorSubject<any>(this.items);
+
+                this.calendar.next(a);
             });
-// console.log('items', this.items);
+this.calendar.subscribe(a => console.log('data here' , a));
         // this.data
         //     .pipe(tap(console.log))
         //     .subscribe(console.log);
@@ -68,7 +86,7 @@ export class OverviewComponent implements OnInit {
         //         console.log(a);
         //     })
         this.items = (this.service._increaseUpperBoundDate(1));
-        this.data.next(this.items);
+        this.calendar.next(this.items);
         this.recordLock = false;
 
     }
@@ -114,4 +132,17 @@ class ScrollDirection {
         this.currIdx = idx;
         this.direction = this.currIdx > this.prevIdx ? 1 : -1;
     }
+}
+
+export function LogMethod(target, propertyKey: string, descriptor: PropertyDescriptor) {
+    const originalMethod = descriptor.value;
+
+    return {
+        ...descriptor,
+        value: (...args) => {
+            console.log(`call ${propertyKey}`);
+            const result = originalMethod.apply(target, args);
+            console.log(`${propertyKey} returned ==>`, result);
+        },
+    };
 }

@@ -19,22 +19,21 @@
     <div *ngIf="showCal">
         <cdk-virtual-scroll-viewport itemSize="100" class="example-viewport"
                                      (onContentRendered)="onContentRendered($event)"
-                                     (scrolledIndexChange)="scrollIdx($event, idx)">
 
+        >
+            <!--(scrolledIndexChange)="scrollIdx($event, idx)"-->
 
-            <div *cdkVirtualFor="let item of data | async as cal; trackBy: trackbyFn; let idx = index" class="week">
+            <div *cdkVirtualFor="let item of calendar | async; trackBy: trackbyFn; let idx = index" class="week">
 
-
-                <!--<div *ngFor="let is of item">{{is|json}}</div>-->
-
-                <app-day-renderer *ngFor="let i of item" [item]="i" [appointments]="appointments[i]"  class="day-renderer" >
+                <app-day-renderer *ngFor="let i of item" [item]="i" [appointments]="appointments[i]"
+                                  class="day-renderer">
                 </app-day-renderer>
             </div>
         </cdk-virtual-scroll-viewport>
 
 
     </div>
-<!--[style.background-color]="'red'"-->
+    <!--[style.background-color]="'red'"-->
 </div>
 
 <!-- Copyright 2018 Google Inc. All Rights Reserved.

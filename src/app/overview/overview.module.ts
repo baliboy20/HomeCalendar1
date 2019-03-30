@@ -32,7 +32,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
         ApptQuickViewComponent],
     exports: [OverviewComponent],
     entryComponents: [ ApptQuickViewComponent],
-    providers: [CalendarService, AppointmentService, {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}]
+    providers: [CalendarService, {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}]
 })
 export class OverviewModule {
 }
