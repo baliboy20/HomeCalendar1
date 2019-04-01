@@ -51,12 +51,10 @@ export class OverviewComponent implements OnInit {
     }
 
 
-    myass =  () => {
-        console.log('and god said it is it good');
-    }
 
 
-   @this.myass()
+
+
     initCalendar() {
 
 console.log('in here');
